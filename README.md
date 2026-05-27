@@ -4,6 +4,16 @@ Skill/plugin Hermes per inviare file locali su Telegram in modo affidabile, evit
 
 Questa skill nasce per l'uso quotidiano con Hermes Agent su Telegram: PDF, DOCX, XLSX, ZIP, immagini e altri allegati locali vengono prima copiati in una cache sicura e poi inviati come allegati nativi Telegram.
 
+## Nota personale
+
+Sono un local SEO, non un programmatore.
+
+Per quanto capiti di lavorare con HTML, CSS, automazioni e strumenti AI, il mio mestiere principale è un altro. Questa skill nasce da un problema concreto che ho incontrato usando Hermes con Telegram: inviare file locali, soprattutto PDF e documenti, senza incappare in invii fantasma che sembrano perdersi nel nulla.
+
+L'ho pubblicata nella speranza che possa essere utile a chi si trova nella mia stessa situazione. Se all'interno della skill troverete errori, soluzioni inefficienti o vere e proprie castronerie, chiedo venia in anticipo 😅
+
+Come sempre, commenti, correzioni e critiche costruttive sono ben accetti. 🤗
+
 ## Funzionamento
 
 Hermes può inviare media a Telegram tramite `MEDIA:/percorso/file`, ma il gateway accetta solo file posizionati in cartelle autorizzate. Se il file si trova altrove — ad esempio in una cartella progetto, in `_inbox/raw`, in `Downloads` o in una directory cliente — il gateway può scartarlo senza un errore evidente.
@@ -12,7 +22,7 @@ La skill risolve il problema con un flusso semplice:
 
 1. **Individua il file locale** da inviare.
 2. **Copia il file nella cache documenti consentita** di Hermes:
-   - `/home/andmin/.hermes/cache/documents/telegram-sender/`
+   - `~/.hermes/cache/documents/telegram-sender/`
 3. **Normalizza il nome file** per ridurre problemi con Telegram o con il gateway:
    - niente spazi;
    - niente caratteri speciali;
@@ -35,9 +45,9 @@ La skill risolve il problema con un flusso semplice:
 - Hermes Agent installato e configurato.
 - Gateway Telegram attivo.
 - Variabile `TELEGRAM_BOT_TOKEN` presente in:
-  - `/home/andmin/.hermes/.env`
-- Chat ID Telegram conosciuto. Nel mio setup personale è:
-  - `170010396`
+  - `~/.hermes/.env`
+- Chat ID Telegram conosciuto. Esempio placeholder:
+  - `<TELEGRAM_CHAT_ID>`
 
 > Nota: il valore del `CHAT_ID` va adattato al proprio ambiente.
 
@@ -79,17 +89,17 @@ Oppure chiedi all'agente di usare la skill `telegram-file-sender` quando deve in
 ### 1. Copia il file nella cache documenti
 
 ```bash
-mkdir -p /home/andmin/.hermes/cache/documents/telegram-sender
-cp /path/to/file.pdf /home/andmin/.hermes/cache/documents/telegram-sender/file.pdf
+mkdir -p ~/.hermes/cache/documents/telegram-sender
+cp /path/to/file.pdf ~/.hermes/cache/documents/telegram-sender/file.pdf
 ```
 
 ### 2. Invio via Telegram Bot API
 
 ```bash
-BOT_TOKEN=$(grep TELEGRAM_BOT_TOKEN /home/andmin/.hermes/.env | cut -d= -f2)
-CHAT_ID=170010396
+BOT_TOKEN=$(grep TELEGRAM_BOT_TOKEN ~/.hermes/.env | cut -d= -f2)
+CHAT_ID=<TELEGRAM_CHAT_ID>
 
-curl -F "document=@/home/andmin/.hermes/cache/documents/telegram-sender/file.pdf" \
+curl -F "document=@${HOME}/.hermes/cache/documents/telegram-sender/file.pdf" \
   "https://api.telegram.org/bot${BOT_TOKEN}/sendDocument" \
   -F "chat_id=${CHAT_ID}" \
   -F "caption=file.pdf"
@@ -100,14 +110,14 @@ curl -F "document=@/home/andmin/.hermes/cache/documents/telegram-sender/file.pdf
 Per immagini già copiate nella cache:
 
 ```text
-MEDIA:/home/andmin/.hermes/cache/documents/telegram-sender/immagine.png
+MEDIA:${HOME}/.hermes/cache/documents/telegram-sender/immagine.png
 ```
 
 ## Limiti noti
 
 - Telegram Bot API accetta un file per chiamata `curl`.
 - I limiti di upload dipendono dalle regole Telegram Bot API.
-- Il percorso `/home/andmin/...` è quello del mio ambiente; altri utenti devono adattarlo al proprio `$HOME`.
+- I percorsi sono documentati con `~` o `${HOME}` per non esporre directory personali.
 - In caso di profili Hermes multipli, controllare la `.env` del profilo corretto.
 
 ## Struttura repository
@@ -119,6 +129,11 @@ telegram-file-sender/
 ```
 
 ## Changelog
+
+### 1.0.1 - 2026-05-27
+
+- Anonimizzati Chat ID e percorsi locali sensibili nella documentazione.
+- Aggiunta nota personale sul contesto dell'autore e apertura a feedback costruttivi.
 
 ### 1.0.0 - 2026-05-27
 

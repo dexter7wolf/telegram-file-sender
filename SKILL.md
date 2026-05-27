@@ -14,11 +14,11 @@ metadata:
 
 ## Contesto
 Hermes media delivery funziona SOLO per file in cartelle consentite:
-- `/home/andmin/.hermes/cache/images/`
-- `/home/andmin/.hermes/cache/documents/`
-- `/home/andmin/.hermes/cache/screenshots/`
-- `/home/andmin/.hermes/image_cache/`
-- `/home/andmin/.hermes/document_cache/`
+- `~/.hermes/cache/images/`
+- `~/.hermes/cache/documents/`
+- `~/.hermes/cache/screenshots/`
+- `~/.hermes/image_cache/`
+- `~/.hermes/document_cache/`
 
 File in altre cartelle (es. `_inbox/raw`, progetti, download) vengono **scartati silenziosamente** dal gateway.
 
@@ -26,8 +26,8 @@ File in altre cartelle (es. `_inbox/raw`, progetti, download) vengono **scartati
 
 ### 1. Copiare i file nella cache documenti (nomi puliti)
 ```bash
-mkdir -p /home/andmin/.hermes/cache/documents/telegram-sender
-cp /path/to/file.pdf /home/andmin/.hermes/cache/documents/telegram-sender/
+mkdir -p ~/.hermes/cache/documents/telegram-sender
+cp /path/to/file.pdf ~/.hermes/cache/documents/telegram-sender/
 ```
 
 **Regole nomi file:**
@@ -38,8 +38,8 @@ cp /path/to/file.pdf /home/andmin/.hermes/cache/documents/telegram-sender/
 
 ### 2. Inviare documenti/PDF/ZIP/XLSX con Telegram API (curl)
 ```bash
-BOT_TOKEN=$(grep TELEGRAM_BOT_TOKEN /home/andmin/.hermes/.env | cut -d= -f2)
-CHAT_ID=170010396
+BOT_TOKEN=$(grep TELEGRAM_BOT_TOKEN ~/.hermes/.env | cut -d= -f2)
+CHAT_ID=<TELEGRAM_CHAT_ID>
 
 curl -F "document=@/percorso/file.pdf" \
   "https://api.telegram.org/bot${BOT_TOKEN}/sendDocument" \
@@ -51,12 +51,12 @@ curl -F "document=@/percorso/file.pdf" \
 
 ### 3. Inviare immagini con MEDIA: (funziona)
 ```
-MEDIA:/home/andmin/.hermes/cache/documents/telegram-sender/foto.png
+MEDIA:${HOME}/.hermes/cache/documents/telegram-sender/foto.png
 ```
 
 ### 4. Pulizia (opzionale)
 ```bash
-rm -rf /home/andmin/.hermes/cache/documents/telegram-sender/*
+rm -rf ~/.hermes/cache/documents/telegram-sender/*
 ```
 
 ## Output atteso
@@ -67,4 +67,4 @@ rm -rf /home/andmin/.hermes/cache/documents/telegram-sender/*
 ## Errori comuni
 - "File non inviato" → il file non era nella cache consentita
 - "Silent drop" → il gateway ha scartato il file senza avvisare
-- Soluzione: verificare che il path sia sotto `/home/andmin/.hermes/cache/`
+- Soluzione: verificare che il path sia sotto `~/.hermes/cache/`
