@@ -145,7 +145,9 @@ telegram-file-sender/
 
 ## Ringraziamenti
 
-Un ringraziamento speciale a **Dagodom** per avermi fornito la sua skill di invio file PDF su Telegram: è stata il punto di partenza da cui ho realizzato e adattato questa skill per il mio workflow Hermes.
+Un ringraziamento speciale a **Dagodom** per avermi fornito la sua skill di invio file PDF su Telegram. È stata il punto di partenza da cui ho realizzato e adattato questa skill per il mio workflow con Hermes.
+
+A volte basta confrontarsi con qualcun altro, scambiarsi un'idea o anche solo vedere un piccolo pezzo di codice per sbloccarsi e trovare l'intuizione giusta. In questo caso è andata proprio così.
 
 ## Licenza
 
