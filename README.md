@@ -4,6 +4,8 @@ Skill/plugin Hermes per inviare file locali su Telegram in modo affidabile, evit
 
 Questa skill nasce per l'uso quotidiano con Hermes Agent su Telegram: PDF, DOCX, XLSX, ZIP, immagini e altri allegati locali vengono prima copiati in una cache sicura e poi inviati come allegati nativi Telegram.
 
+> Nota: questa è una versione alpha, testata per ora solo sul mio sistema. Potrebbero quindi esserci dettagli da adattare o comportamenti diversi su altre configurazioni.
+
 ## Nota personale
 
 Sono un local SEO, non un programmatore.
@@ -134,6 +136,7 @@ telegram-file-sender/
 
 - Anonimizzati Chat ID e percorsi locali sensibili nella documentazione.
 - Aggiunta nota personale sul contesto dell'autore e apertura a feedback costruttivi.
+- Aggiunta nota sullo stato alpha della skill e sul test effettuato per ora solo sul sistema dell'autore.
 
 ### 1.0.0 - 2026-05-27
 
